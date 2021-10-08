@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="/LoginRegister/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+	<link href="/LoginRegister/font/css/font-awesome.min.css" type="text/javascript" rel="stylesheet">
+	<link href="/LoginRegister/css/bootsnav.css" type="text/css" rel="stylesheet">
+	<link href="/LoginRegister/css/normalize.css" type="text/css" rel="stylesheet">
+	<link href="/LoginRegister/css/css.css" rel="stylesheet" type="text/css">
+	<script src="/LoginRegister/js/jquery-1.11.0.min.js" type="text/javascript"></script>
+	<script src="/LoginRegister/js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="/LoginRegister/js/bootsnav.js" type="text/javascript"></script>
+	<script src="/LoginRegister/js/jquery.js" type="text/javascript"></script>
+	<!--[if IE]><script src="/LoginRegister/js/html5.js"></script><![endif]-->
+	<title>校园课外娱乐网用户注册</title>
+</head>
+
+<body class="logobg_style">
+<div id="large-header" class="large-header login-page">
+	<canvas id="demo-canvas" width="1590" height="711"></canvas>
+	<div class="login-form">
+		<div class="login-content">
+			<h1 class="title_name">用户账户注册</h1>
+			<form method="post" role="form" id="form_login" class="login_padding">
+				<div class="form-group clearfix">
+
+					<div class="input-group">
+						<div class="input-group-addon">
+							<i class="icon_user"></i>
+						</div>
+
+						<input type="text" class="form-control" name="username" id="username" placeholder="账号" autocomplete="off">
+					</div>
+
+				</div>
+
+				<div class="form-group clearfix">
+
+					<div class="input-group">
+						<div class="input-group-addon">
+							<i class="icon_password"></i>
+						</div>
+
+						<input type="password" class="form-control" name="password" id="password" placeholder="密码" autocomplete="off">
+					</div>
+
+				</div>
+				<div class="tishi"></div>
+				<div class="form-group">
+					<input type="button" id="submit" class="btn btn-danger btn-block btn-login" value="注册">
+				</div>
+				<!-- Implemented in v1.1.4 -->
+				<div class="form-group"></div>
+			</form>
+		</div>
+
+	</div>
+</div>
+
+<script src="/LoginRegister/js/TweenLite/TweenLite.min.js"></script>
+<script src="/LoginRegister/js/TweenLite/EasePack.min.js"></script>
+<script src="/LoginRegister/js/TweenLite/rAF.js"></script>
+<script src="/LoginRegister/js/TweenLite/demo-1.js"></script>
+<script src="/js/layer/layer.js" type="text/javascript" charset="utf-8"></script>
+
+<!--实现用户注册-->
+<script>
+
+	$(function () {
+
+		//通过AJAX将用户输入的账号和密码添加到数据库
+		$('#submit').click(function () {
+
+			let username = $('#username').val();
+			let password = $('#password').val();
+
+			let xUrl = "/user/addUser";
+
+			if (username === "" || password === "") {
+				layer.msg("账号或密码未填写");
+			} else {
+
+				$.ajax({
+					url:xUrl,
+					type:"POST",
+					data: {
+						"username":username,
+						"password":password
+					},
+					async:false,
+					success:function (data) {
+
+						if (data === "fail") {
+
+							layer.msg("该用户名已存在");
+
+							$('#username').val = "";
+							$('#password').val = "";
+						} else if (data === "success"){
+
+							layer.msg("注册成功，前往登陆界面");
+
+							window.location.href = "/user/userlogin";
+						}
+					}
+				});
+
+			}
+		});
+
+
+	});
+
+</script>
+
+
+</body>
+</html>

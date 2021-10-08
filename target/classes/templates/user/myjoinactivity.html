@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>校园课外娱乐网</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <!-- Bootstrap styles -->
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap-table.min.css"/>
+
+    <!-- Font-Awesome -->
+    <link rel="stylesheet" href="/bootstrap/font-awesome/css/font-awesome.min.css">
+
+    <!-- Google Webfonts -->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600|PT+Serif:400,400italic' rel='stylesheet' type='text/css'>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/bootstrap/css/style.css" id="theme-styles">
+
+    <link rel="stylesheet" href="/css/booklist.css">
+
+    <style>
+        thead tr .th-inner {text-align: center;}
+    </style>
+
+</head>
+<body>
+<header>
+    <div class="widewrapper masthead">
+        <div class="container">
+            <a href="" id="logo">
+                <span style="color: #3c485d; font-size: 30px;">校园课外娱乐网</span>
+            </a>
+
+            <nav class="pull-right">
+                <div class="collapse navbar-collapse">
+                    <ul class="nav nav-pills navbar-nav">
+                        <li>
+                            <a href="/user/index">首页</a>
+                        </li>
+                        <li>
+                            <a href="/user/bookhome">读书</a>
+                        </li>
+                        <li>
+                            <a href="/user/moviehome">电影</a>
+                        </li>
+                        <li>
+                            <a href="/user/musichome">音乐</a>
+                        </li>
+                        <li>
+                            <a href="/user/activityhome">户外活动</a>
+                        </li>
+                        <li>
+                            <a href="/user/userinfohome">个人管理</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+        </div>
+    </div>
+
+    <div class="widewrapper subheader">
+        <div class="container">
+
+            <div class="clean-breadcrumb">
+                <a href="/user/index">首页</a>
+                <span class="separator">&#x2F;</span>
+                <a href="">我参与的活动</a>
+            </div>
+
+            <div class="clean-searchbox">
+                <div accept-charset="utf-8">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button class="searchbutton" id="searchbtn">
+                        <i class="fa fa-search"></i>&nbsp;&nbsp;&nbsp;&nbsp;图书 音乐 电影
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!--右边-->
+<div class="widewrapper main">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-8 blog-main">
+
+                <div class="page-header">
+                    <h4>活动</h4>
+                </div>
+
+                <!--表格-->
+                <div id="datatable" style="text-align: center;">
+                    <div id="toolbar"></div>
+                    <table id="table"  style="text-align: center;"></table>
+                </div>
+                <!--表格结束-->
+
+                <div class="paging">
+                    <a href="#" class="older">返回顶部</i></a>
+                </div>
+            </div>
+
+
+            <aside class="col-md-4 blog-aside">
+
+                <div class="aside-widget">
+                    <header>
+                        <h3>用户</h3>
+                    </header>
+                    <div class="body" id="showuserinfo">
+                    </div>
+                </div>
+
+                <div class="aside-widget">
+                    <header>
+                        <h3>我的</h3>
+                    </header>
+                    <div class="body">
+                        <ul>
+                            <li><button type="button" class="btn btn-default" id="myactivity">我发起的活动</button></li>
+                            <li><button type="button" class="btn btn-default" id="joinactivity">我参与的活动</button></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </aside>
+        </div>
+    </div>
+</div>
+
+<!--底部-->
+<footer>
+    <div class="widewrapper footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 footer-widget">
+                    <h3> <i class="fa fa-user"></i>关于</h3>
+
+                    <p>这是一个集书籍、电影、音乐和户外活动的四个主题的校园课外娱乐网站，用于丰富学生的课外生活。</p>
+                </div>
+
+                <div class="col-md-4 footer-widget">
+                    <h3> <i class="fa fa-pencil"></i>校园网站</h3>
+                    <ul class="clean-list">
+                        <li><a href="https://www.zhku.edu.cn/" target="_blank">仲恺农业工程学院官网</a></li>
+                        <li><a href="http://jw.zhku.edu.cn/" target="_blank">仲恺农业工程学院教务网</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-4 footer-widget">
+                    <h3> <i class="fa fa-envelope"></i>联系方式</h3>
+                    <p>邮箱：2606201863@qq.com</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="/bootstrap/js/jquery.min.js" charset="utf-8"></script>
+<script src="/bootstrap/js/bootstrap.min.js"></script>
+<script src="/bootstrap/js/modernizr.js"></script>
+<script src="/js/myjs/ifshowuser.js"></script>
+<!-- layer -->
+<script src="/js/layer/layer.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- bootstrap table -->
+<script src="/bootstrap/js/bootstrap-table.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/bootstrap/js/bootstrap-table-zh-CN.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- bootstrap table -->
+<script src="/bootstrap/js/bootstrap-paginator.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#table').bootstrapTable({
+            url:"/activity/findjoinactivity",
+            method: 'post',             //请求方式（*）
+            locale: "zh-CN",            // 语言
+            dataType:"json",
+            contentType: "application/x-www-form-urlencoded",
+            toolbar: "#toolbar",        // 工具栏
+            search: true,              // 显示搜索
+            showColumns: false,         //隐藏列
+            striped: true,              // 是否显示行间隔色
+            showRefresh: true,         // 是否显示刷新按钮
+            clickToSelect: false,       // 是否启用点击选中行
+            showToggle: true,          // 是否显示详细视图和列表视图的切换按钮
+            sortable: false,            // 是否启用排序
+            sortOrder: "asc",           // 排序方式
+            pagination: true,           // 是否显示分页
+            pageSize: "3",              // 每页显示的行数
+            pageList: [2, 5, 10],        //可供选择的每页的行数（*）
+            pageNumber:"1",               //当前第几页
+            sidePagination: "client",   // 分页方式：client客户端分页，server服务端分页
+            columns: [
+                { field: 'activityname', title: '活动名称', sortable: true},
+                { field: 'activityplace', title: '活动地点', sortable: true},
+                { field: 'activitydate', title: '活动日期', sortable: true},
+                /*{ field: 'state', title: '活动状态', sortable: true},*/
+                {
+                    field: 'operate',
+                    title: '操作',
+                    align: 'center',
+                    valign: 'middle',
+                    events: {
+                        'click #activitydetails': function (e, value, row, index) {
+                            /*执行活动详情跳转*/
+                            var url = "/activity/activitydetails?activityid="+row.activityid;
+                            window.location.href = url;
+                        }
+                    },
+                    formatter: function (value, row, index) {
+                        var result = "";
+                        result += '<button id="activitydetails" class="btn btn-danger" style="margin-left:10px;">详情</button>';
+                        return result;
+                    }
+                }
+            ]
+        });
+
+    });
+</script>
+
+
+</body>
+</html>

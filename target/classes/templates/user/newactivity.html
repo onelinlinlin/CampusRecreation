@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>提交新的活动</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <!-- Bootstrap styles -->
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/bootstrap/css/fileinput.min.css"/>
+
+    <!-- Font-Awesome -->
+    <link rel="stylesheet" href="/bootstrap/font-awesome/css/font-awesome.min.css">
+
+    <!-- Google Webfonts -->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600|PT+Serif:400,400italic' rel='stylesheet' type='text/css'>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/bootstrap/css/style.css" id="theme-styles">
+
+
+    <script src="/bootstrap/js/jquery.min.js"></script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/bootstrap/js/modernizr.js"></script>
+    <script src="/js/myjs/ifshowuser.js"></script>
+    <script src="/bootstrap/js/fileinput.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/bootstrap/js/zh.js" type="text/javascript" charset="utf-8"></script>
+
+    <script src="/bootstrap/js/bootstrap-datetimepicker.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap-datetimepicker.css"/>
+    <script src="/bootstrap/js/bootstrap-datetimepicker.zh-CN.js" type="text/javascript" charset="utf-8"></script>
+
+    <script src="/js/layer/layer.js" type="text/javascript" charset="utf-8"></script>
+
+    <script>
+
+        $(function () {
+
+            /*页面加载时，获得用户信息，进行页面显示*/
+            $.ajax({
+                url: "/user/useriflogin",
+                type: "POST",
+                async:false,
+                success: function (data) {
+
+                    var username = "";
+
+                    if (data['iflogin'] === "usernologin") {
+                        username = "用户未登录";
+                    } else if (data['iflogin'] === "userislogin") {
+                        username = data['userdata'].username;
+                    }
+
+                    $('#username').val(username);
+                }
+            });
+
+            /*bootstrap时间选择插件*/
+            $('#activitydate').datetimepicker({
+                forceParse: 0, //设置为0，时间不会跳转为1899
+                language: 'zh-CN' , //显示中文
+                format: 'yyyy-mm-dd', //显示格式
+                minView: "month", //显示到月份
+                initialDate: new Date(), //初始化当前的日期
+                autoclose: true, //选中自动关闭
+                todayBtn: true //显示当日按钮
+            });
+
+            //添加个人活动
+            $('#submitBtn').click(function () {
+                var activityname = $('#activityname').val();
+                var activityplace = $('#activityplace').val();
+                var activitydate = $('#activitydate').val();
+                var activitytime = $('#activitytime').val();
+                var activityintro = $('#activityintro').val();
+
+                if (activityname != "" &&　activityplace != "" && activitydate != "" && activitytime != "" && activityintro != "") {
+                    $.ajax({
+                        url: "/activity/addnewactivity",
+                        type:"post",
+                        async:false,
+                        data: {
+                            "activityname": activityname,
+                            "activityplace":activityplace,
+                            "activitydate":activitydate,
+                            "activitytime":activitytime,
+                            "activityintro":activityintro
+                        },
+                        success: function (data) {
+                            if (data === "成功发布活动") {
+                                layer.msg("成功发布活动，请前往我发起的活动");
+
+                                $('#activityname').val("");
+                                $('#activityplace').val("");
+                                $('#activitydate').val("");
+                                $('#activitytime').val("");
+                                $('#activityintro').val("");
+
+                            } else if(data === "用户未登录") {
+                                layer.msg("用户未登录，无权限发布");
+                            }
+                        }
+                    });
+
+                } else {
+                    layer.msg("有信息未填入");
+                }
+
+            });
+
+        });
+
+    </script>
+
+</head>
+<body>
+<header>
+    <div class="widewrapper masthead">
+        <div class="container">
+            <a href="" id="logo">
+                <span style="color: #3c485d; font-size: 30px;">校园课外娱乐网</span>
+            </a>
+
+            <nav class="pull-right">
+                <div class="collapse navbar-collapse">
+                    <ul class="nav nav-pills navbar-nav">
+                        <li>
+                            <a href="/user/index">首页</a>
+                        </li>
+                        <li>
+                            <a href="/user/bookhome">读书</a>
+                        </li>
+                        <li>
+                            <a href="/user/moviehome">电影</a>
+                        </li>
+                        <li>
+                            <a href="/user/musichome">音乐</a>
+                        </li>
+                        <li>
+                            <a href="/user/activityhome">户外活动</a>
+                        </li>
+                        <li>
+                            <a href="/user/userinfohome">个人管理</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+        </div>
+    </div>
+
+    <div class="widewrapper subheader">
+        <div class="container">
+
+            <!--面包屑导航-->
+            <div class="clean-breadcrumb">
+                <a href="/user/index">首页</a>
+                <span class="separator">&#x2F;</span>
+                <a href="">发布新活动</a>
+            </div>
+
+            <div class="clean-searchbox">
+                <div accept-charset="utf-8">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button class="searchbutton" id="searchbtn">
+                        <i class="fa fa-search"></i>&nbsp;&nbsp;&nbsp;&nbsp;图书 音乐 电影
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="widewrapper main">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-8 blog-main">
+
+                <div class="page-header">
+                    <h4><span>发布新活动</span></h4>
+                </div>
+
+                <!--表单开始-->
+                <div id="form">
+
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label">账号</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" readonly="readonly" id="username" name="username"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="activityname" class="col-sm-2 control-label">活动名称</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" id="activityname" name="activityname" placeholder="请输入活动名称"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="activityplace" class="col-sm-2 control-label">活动地点</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" id="activityplace" name="activityplace" placeholder="请输入活动地点"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="activitydate" class="col-sm-2 control-label">活动日期</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" id="activitydate" name="activitydate" placeholder="请输入活动日期"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="activitytime" class="col-sm-2 control-label">活动天数</label>
+                            <div class="col-sm-6">
+                               <input type="text" class="form-control" id="activitytime" name="activitytime" placeholder="请输入活动天数"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="activityintro" class="col-sm-2 control-label">简介</label>
+                            <div class="col-sm-6">
+                                <textarea id="activityintro" name="activityintro" class="form-control" rows="5"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" id="submitBtn" class="btn btn-default">确定发布</button>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+                <!--表单结束-->
+
+
+                <div class="paging">
+                    <a href="#" class="older">返回顶部</i></a>
+                </div>
+            </div>
+
+
+            <!--右边-->
+            <aside class="col-md-4 blog-aside">
+
+                <div class="aside-widget">
+                    <header>
+                        <h3>用户</h3>
+                    </header>
+                    <div class="body" id="showuserinfo">
+
+                    </div>
+                </div>
+
+                <div class="aside-widget">
+                    <header>
+                        <h3>我的</h3>
+                    </header>
+                    <div class="body">
+                        <ul>
+                            <li><button type="button" class="btn btn-default" id="myactivity">我发起的活动</button></li>
+                            <li><button type="button" class="btn btn-default" id="joinactivity">我参与的活动</button></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </aside>
+        </div>
+    </div>
+</div>
+
+<!--网页底部-->
+<footer>
+    <div class="widewrapper footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 footer-widget">
+                    <h3> <i class="fa fa-user"></i>关于</h3>
+
+                    <p>这是一个集书籍、电影、音乐和户外活动的四个主题的校园课外娱乐网站，用于丰富学生的课外生活。</p>
+                </div>
+
+                <div class="col-md-4 footer-widget">
+                    <h3> <i class="fa fa-pencil"></i>校园网站</h3>
+                    <ul class="clean-list">
+                        <li><a href="https://www.zhku.edu.cn/" target="_blank">仲恺农业工程学院官网</a></li>
+                        <li><a href="http://jw.zhku.edu.cn/" target="_blank">仲恺农业工程学院教务网</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-4 footer-widget">
+                    <h3> <i class="fa fa-envelope"></i>联系方式</h3>
+                    <p>邮箱：2606201863@qq.com</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+</body>
+</html>

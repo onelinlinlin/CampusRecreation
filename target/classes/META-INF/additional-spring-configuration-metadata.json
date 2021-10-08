@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "spring.mybatis.type-aliases-package",
+      "type": "java.lang.String",
+      "description": "Description for spring.mybatis.type-aliases-package."
+  }
+] }

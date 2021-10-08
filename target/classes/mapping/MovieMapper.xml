@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lzp.mapper.MovieMapper">
+
+    <select id="findallmovie" resultType="MovieEntity">
+        select * from movie
+    </select>
+
+    <select id="findMovieById" parameterType="int" resultType="MovieEntity">
+        SELECT * FROM movie WHERE movieid = #{movieid}
+    </select>
+
+    <select id="findmovierecommend" parameterType="int" resultType="MovieEntity">
+        SELECT * FROM movie WHERE recommend = '是'
+    </select>
+
+    <select id="findMovieBymoviename"  resultType="MovieEntity">
+        SELECT * FROM movie WHERE moviename like "%"#{moviename}"%"
+    </select>
+
+    <select id="setMovierecommend">
+        UPDATE movie SET recommend = #{recommend} where movieid = #{movieid}
+    </select>
+
+    <select id="addnewmovie">
+        insert into movie(movieid,moviename,director,language,showtime,duration,actor,briefintro,movieprc,movietype,score,recommend)
+        values(0,#{moviename},#{director},#{language},#{showtime},#{duration},#{actor},#{briefintro},"","",0,"否")
+    </select>
+
+    <update id="updatemovie">
+        UPDATE movie
+        <set>
+            <if test="moviename != null and moviename != '' ">
+                moviename = #{moviename},
+            </if>
+            <if test="director != null and director != '' ">
+                director = #{director},
+            </if>
+            <if test="language != null and language != '' ">
+                language = #{language},
+            </if>
+            <if test="showtime != null and showtime != '' ">
+                showtime = #{showtime},
+            </if>
+            <if test="duration != null and duration != '' ">
+                duration = #{duration},
+            </if>
+            <if test="actor != null and actor != '' ">
+                actor = #{actor},
+            </if>
+            <if test="briefintro != null and briefintro != '' ">
+                briefintro = #{briefintro},
+            </if>
+        </set>
+        where movieid = #{movieid}
+    </update>
+
+
+    <delete id="delmovie">
+        delete from movie where movieid = #{movieid}
+    </delete>
+
+    <update id="updateMovieprc">
+        UPDATE movie SET movieprc = #{movieid} WHERE movieid = #{movieid}
+    </update>
+
+</mapper>

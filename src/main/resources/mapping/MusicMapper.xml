@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lzp.mapper.MusicMapper">
+
+    <select id="findallmusic" resultType="MusicEntity">
+        select * from music
+    </select>
+
+    <select id="findMusicById" parameterType="int" resultType="MusicEntity">
+        SELECT * FROM music WHERE musicid = #{musicid}
+    </select>
+
+    <select id="findmusicrecommend" parameterType="int" resultType="MusicEntity">
+        SELECT * FROM music WHERE recommend = '是'
+    </select>
+
+    <select id="findmusicBymusicname"  resultType="MusicEntity">
+        SELECT * FROM music WHERE musicname like "%"#{musicname}"%"
+    </select>
+
+    <select id="setMusicrecommend">
+        UPDATE music SET recommend = #{recommend} where musicid = #{musicid}
+    </select>
+
+    <select id="addnewmusic">
+        insert into music(musicid,musicname,singer,publisher,briefintro,pubdate,musictype,score,recommend)
+        values(0,#{musicname},#{singer},#{publisher},#{briefintro},#{pubdate},#{musictype},0,"否")
+    </select>
+
+    <update id="updatemusic">
+        UPDATE music
+        <set>
+            <if test="musicname != null and musicname != '' ">
+                musicname = #{musicname},
+            </if>
+            <if test="singer != null and singer != '' ">
+                singer = #{singer},
+            </if>
+            <if test="publisher != null and publisher != '' ">
+                publisher = #{publisher},
+            </if>
+            <if test="pubdate != null and pubdate != '' ">
+                pubdate = #{pubdate},
+            </if>
+            <if test="briefintro != null and briefintro != '' ">
+                briefintro = #{briefintro},
+            </if>
+        </set>
+        where musicid = #{musicid}
+    </update>
+
+    <delete id="delmusic">
+        delete from music where musicid = #{musicid}
+    </delete>
+
+    <update id="updateMusicprc">
+        UPDATE music SET musicprc = #{musicid} WHERE musicid = #{musicid}
+    </update>
+    
+
+</mapper>

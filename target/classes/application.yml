@@ -1,0 +1,37 @@
+spring:
+  ###ThymeLeaf配置
+  thymeleaf:
+    #prefix：指定模板所在的目录
+    prefix: classpath:/templates/
+    #check-tempate-location: 检查模板路径是否存在
+    check-template-location: true
+    #cache: 是否缓存，开发模式下设置为false，避免改了模板还要重启服务器，线上设置为true，可以提高性能。
+    cache: false
+    suffix:  .html
+    encoding: UTF-8
+    mode: HTML5
+  ###数据库
+  datasource:
+    url: jdbc:mysql://localhost/crdb?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false&useAffectedRows=true
+    ##?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+  # mvc配置
+  devtools:
+    restart:
+      exclude: static
+
+#mapper映射
+mybatis:
+  type-aliases-package: com.lzp.entity
+  mapper-locations: classpath:mapping/*.xml
+
+#分页设置
+pagehelper:
+  reasonable: true    # reasonable：启用合理化时，如果pageNum<1会查询第一页，如果pageNum>pages会查询最后一页。
+  support-methods-arguments: true
+  params: count=countSql
+  helper-dialect: mysql   #数据库类型
+
+

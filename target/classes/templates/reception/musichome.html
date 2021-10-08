@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>校园课外娱乐网</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <!-- Bootstrap styles -->
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
+
+    <!-- Font-Awesome -->
+    <link rel="stylesheet" href="/bootstrap/font-awesome/css/font-awesome.min.css">
+
+    <!-- Google Webfonts -->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600|PT+Serif:400,400italic' rel='stylesheet' type='text/css'>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/bootstrap/css/style.css" id="theme-styles">
+
+    <link rel="stylesheet" href="/css/booklist.css">
+
+</head>
+<body>
+<header>
+    <div class="widewrapper masthead">
+        <div class="container">
+            <a href="" id="logo">
+                <span style="color: #3c485d; font-size: 30px;">校园课外娱乐网</span>
+            </a>
+
+            <nav class="pull-right">
+                <div class="collapse navbar-collapse">
+                    <ul class="nav nav-pills navbar-nav">
+                        <li>
+                            <a href="/user/index">首页</a>
+                        </li>
+                        <li>
+                            <a href="/user/bookhome">读书</a>
+                        </li>
+                        <li>
+                            <a href="/user/moviehome">电影</a>
+                        </li>
+                        <li>
+                            <a href="/user/musichome">音乐</a>
+                        </li>
+                        <li>
+                            <a href="/user/activityhome">户外活动</a>
+                        </li>
+                        <li>
+                            <a href="/user/userinfohome">个人管理</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+        </div>
+    </div>
+
+    <div class="widewrapper subheader">
+        <div class="container">
+
+            <div class="clean-breadcrumb">
+                <a href="/user/index">首页</a>
+                <span class="separator">&#x2F;</span>
+                <a href="/user/musichome">音乐</a>
+            </div>
+
+            <div class="clean-searchbox">
+                <div accept-charset="utf-8">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button class="searchbutton" id="searchbtn">
+                        <i class="fa fa-search"></i>&nbsp;&nbsp;&nbsp;&nbsp;图书 音乐 电影
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!--右边-->
+<div class="widewrapper main">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-8 blog-main">
+
+                <div class="page-header">
+                    <h4>音乐列表</h4>
+                </div>
+
+                <!--音乐列表-->
+                <div class="row" style="margin: 40px 0 20px;" id="showmusic"></div>
+
+                <div class="paging">
+
+                    <ul id="pageButton"></ul>
+                    <br/>
+
+                    <a href="#" class="older">返回顶部</i></a>
+                </div>
+            </div>
+            <aside class="col-md-4 blog-aside">
+
+                <div class="aside-widget">
+                    <header>
+                        <h3>用户</h3>
+                    </header>
+                    <div class="body" id="showuserinfo">
+                    </div>
+                </div>
+
+                <div class="aside-widget">
+                    <header>
+                        <h3>我的</h3>
+                    </header>
+                    <div class="body">
+                        <ul>
+                            <li><button type="button" class="btn btn-default" id="myactivity">我发起的活动</button></li>
+                            <li><button type="button" class="btn btn-default" id="joinactivity">我参与的活动</button></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </aside>
+        </div>
+    </div>
+</div>
+
+<!--底部-->
+<footer>
+    <div class="widewrapper footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 footer-widget">
+                    <h3> <i class="fa fa-user"></i>关于</h3>
+
+                    <p>这是一个集书籍、电影、音乐和户外活动的四个主题的校园课外娱乐网站，用于丰富学生的课外生活。</p>
+                </div>
+
+                <div class="col-md-4 footer-widget">
+                    <h3> <i class="fa fa-pencil"></i>校园网站</h3>
+                    <ul class="clean-list">
+                        <li><a href="https://www.zhku.edu.cn/" target="_blank">仲恺农业工程学院官网</a></li>
+                        <li><a href="http://jw.zhku.edu.cn/" target="_blank">仲恺农业工程学院教务网</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-4 footer-widget">
+                    <h3> <i class="fa fa-envelope"></i>联系方式</h3>
+                    <p>邮箱：2606201863@qq.com</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="/bootstrap/js/jquery.min.js" charset="utf-8"></script>
+<script src="/bootstrap/js/bootstrap.min.js"></script>
+<script src="/bootstrap/js/modernizr.js"></script>
+<script src="/js/myjs/ifshowuser.js"></script>
+<!-- layer -->
+<script src="/js/layer/layer.js" type="text/javascript" charset="utf-8"></script>
+<script src="/bootstrap/js/bootstrap-table.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/bootstrap/js/bootstrap-table-zh-CN.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/bootstrap/js/bootstrap-paginator.min.js"></script>
+
+<!--显示数据到页面上-->
+<script>
+
+    /*实现分页*/
+    $(function () {
+        // 初始化页面
+        getPageOfMemo(1);
+    });
+
+    // 分页函数
+    function getPageOfMemo(page) {
+        $.ajax({
+            url : "/music/findallmusic",
+            type : "POST",
+            data : {
+                "pageNum" : page, // 初始页
+                "pageSize" : 5,
+            },
+            success : function(data) {
+                var totalPages;
+                var pageSize = 5;
+                if (data != null) {
+
+                    totalPages = (data["musicNum"]+pageSize-1) /pageSize;
+
+                    var htm = "";
+                    $.each(data["musiclist"], function(i, item) {
+
+                        htm += "<div class=\"col-md-8 bookmain\" id=\"bookmain\">";
+                        htm += "<table class=\"bookinfo\"><tr><td rowspan =\"2\">";
+                        htm += "<a href='/music/musicdetails?musicid="+item.musicid+"'><img src=\"/prc/musicprc/"+item.musicprc+".jpg\" height=\"135\" width=\"135\"></a></td><td>";
+
+                        htm += "<ul style=\"list-style-type: none;\">";
+                        htm +=  "<li>名称：<a href='/music/musicdetails?musicid="+item.musicid+"'>"+item.musicname+"</a></li>" +
+                            "<li>歌手：<span>"+item.singer+"</span></li>" +
+                            "<li>音乐类型：<span>"+item.musictype+"</span></li>" +
+                            "<li>评分：<span>"+item.score+"</span></li>";
+                        htm += "</ul></td></tr></table></div>";
+
+                    });
+
+                    $('#showmusic').html(htm);
+
+                    var element = $('#pageButton');
+                    var options = {
+                        bootstrapMajorVersion : 3,
+                        currentPage : page, // 当前页数
+                        //numberOfPages : 5, // 显示按钮的数量
+                        totalPages : totalPages, // 总页数
+                        itemTexts : function(type, page, current) {
+                            switch (type) {
+                                case "first":
+                                    return "首页";
+                                case "prev":
+                                    return "上一页";
+                                case "next":
+                                    return "下一页";
+                                case "last":
+                                    return "末页";
+                                case "page":
+                                    return page;
+                            }
+                        },
+                        // 点击事件，用于通过Ajax来刷新整个list列表
+                        onPageClicked : function(event, originalEvent, type, page) {
+                            getPageOfMemo(page);
+                        }
+                    };
+
+                    element.bootstrapPaginator(options);
+                }
+            }
+        });
+    };
+
+</script>
+
+</body>
+</html>

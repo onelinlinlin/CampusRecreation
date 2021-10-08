@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>音乐详情</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <!-- Bootstrap styles -->
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
+
+    <!-- Font-Awesome -->
+    <link rel="stylesheet" href="/bootstrap/font-awesome/css/font-awesome.min.css">
+
+    <!-- Google Webfonts -->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600|PT+Serif:400,400italic' rel='stylesheet' type='text/css'>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/bootstrap/css/style.css" id="theme-styles">
+
+
+</head>
+<body>
+<header>
+    <div class="widewrapper masthead">
+        <div class="container">
+            <a href="" id="logo">
+                <span style="color: #3c485d; font-size: 30px;">校园课外娱乐网</span>
+            </a>
+
+            <nav class="pull-right">
+                <div class="collapse navbar-collapse">
+                    <ul class="nav nav-pills navbar-nav">
+                        <li>
+                            <a href="/user/index">首页</a>
+                        </li>
+                        <li>
+                            <a href="/user/bookhome">读书</a>
+                        </li>
+                        <li>
+                            <a href="/user/moviehome">电影</a>
+                        </li>
+                        <li>
+                            <a href="/user/musichome">音乐</a>
+                        </li>
+                        <li>
+                            <a href="/user/activityhome">户外活动</a>
+                        </li>
+                        <li>
+                            <a href="/user/userinfohome">个人管理</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+        </div>
+    </div>
+
+    <div class="widewrapper subheader">
+        <div class="container">
+
+            <!--面包屑导航-->
+            <div class="clean-breadcrumb">
+                <a href="/user/index">首页</a>
+                <span class="separator">&#x2F;</span>
+                <a href="/user/musichome">音乐</a>
+                <span class="separator">&#x2F;</span>
+                <a href=""><span th:text="${musicEntity.musicname}"></span></a>
+            </div>
+
+            <div class="clean-searchbox">
+                <div accept-charset="utf-8">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button class="searchbutton" id="searchbtn">
+                        <i class="fa fa-search"></i>&nbsp;&nbsp;&nbsp;&nbsp;图书 音乐 电影
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="widewrapper main">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-8 blog-main">
+
+                <div class="page-header">
+                    <h4><span th:text="${musicEntity.musicname}"></span></h4>
+                </div>
+
+                <!--音乐详情-->
+                <div id="bookinfo">
+                    <table class="bookinfo">
+                        <tr>
+                            <td rowspan ="2">
+                                <img th:src="|/prc/musicprc/${musicEntity.musicprc}.jpg|" height="135" width="135"/>
+                            </td>
+                            <td>
+                                <ul style="list-style-type: none;">
+                                    <li><span>&nbsp</span></li>
+                                    <li>表演者：<span th:text="${musicEntity.singer}"></span></li>
+                                    <li>流派：<span th:text="${musicEntity.musictype}"></span></li>
+                                    <li>发行时间：<span th:text="${musicEntity.pubdate}"></span></li>
+                                    <li>出版者：<span th:text="${musicEntity.publisher}"></span></li>
+                                    <li><span>&nbsp</span></li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <!--简介-->
+                <div id="bookjianjie">
+                    <div class="page-header">
+                        <h4><span>音乐简介</span></h4>
+                    </div>
+                    <table class="bookinfo">
+                        <tr>
+                            <td>
+                                <p style="text-indent: 2em;"><span th:text="${musicEntity.briefintro}"></span></p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <!--评分-->
+                <div id="bookpingfen">
+                    <div class="page-header">
+                        <h4><span>音乐评分</span></h4>
+                    </div>
+                    <table class="bookinfo">
+                        <tr>
+                            <td>
+                                评分：
+                            </td>
+                            <td style="color: red;" id="showscore">
+                                <span th:text="${musicEntity.score}"></span>
+                            </td>
+                        </tr>
+                    </table>
+                    <button id="scorebtn" type="button" class="btn btn-default" style="float: right;">我也要评分</button>
+                </div>
+
+                <!--评论区-->
+                <div id="pinglun">
+                    <div class="page-header">
+                        <h4><span>评论区</span></h4>
+                    </div>
+                    <div class="row" id="showcomment"></div>
+                </div>
+
+
+                <div class="paging">
+                    <ul id="pageButton"></ul>
+
+                    <br/>
+
+                    <aside class="create-comment" id="create-comment">
+                        <hr>
+                        <div>
+                            <textarea rows="10"  id="comment" placeholder="进行评论" class="form-control input-lg"></textarea>
+
+                            <div class="buttons clearfix">
+                                <button type="submit" id="submitComment" class="btn btn-default">提交评论</button>
+                            </div>
+                        </div>
+                    </aside>
+
+                    <a href="#" class="older">返回顶部</i></a>
+                </div>
+            </div>
+
+
+            <!--右边-->
+            <aside class="col-md-4 blog-aside">
+
+                <div class="aside-widget">
+                    <header>
+                        <h3>用户</h3>
+                    </header>
+                    <div class="body" id="showuserinfo">
+
+                    </div>
+                </div>
+
+                <div class="aside-widget">
+                    <header>
+                        <h3>我的</h3>
+                    </header>
+                    <div class="body">
+                        <ul>
+                            <li><button type="button" class="btn btn-default" id="myactivity">我发起的活动</button></li>
+                            <li><button type="button" class="btn btn-default" id="joinactivity">我参与的活动</button></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </aside>
+        </div>
+    </div>
+</div>
+
+<!--网页底部-->
+<footer>
+    <div class="widewrapper footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 footer-widget">
+                    <h3> <i class="fa fa-user"></i>关于</h3>
+
+                    <p>这是一个集书籍、电影、音乐和户外活动的四个主题的校园课外娱乐网站，用于丰富学生的课外生活。</p>
+                </div>
+
+                <div class="col-md-4 footer-widget">
+                    <h3> <i class="fa fa-pencil"></i>校园网站</h3>
+                    <ul class="clean-list">
+                        <li><a href="https://www.zhku.edu.cn/" target="_blank">仲恺农业工程学院官网</a></li>
+                        <li><a href="http://jw.zhku.edu.cn/" target="_blank">仲恺农业工程学院教务网</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-4 footer-widget">
+                    <h3> <i class="fa fa-envelope"></i>联系方式</h3>
+                    <p>邮箱：2606201863@qq.com</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="/bootstrap/js/jquery.min.js"></script>
+<script src="/bootstrap/js/bootstrap.min.js"></script>
+<script src="/bootstrap/js/modernizr.js"></script>
+<script src="/js/myjs/ifshowuser.js"></script>
+<script src="/js/layer/layer.js" type="text/javascript" charset="utf-8"></script>
+<script src="/bootstrap/js/bootstrap-paginator.min.js"></script>
+
+<script th:inline="javascript">
+
+    /*书籍详情页获取评论*/
+    $(function () {
+
+        $('#scorebtn').click(function () {
+            layer.open({
+                title: '评分',
+                type: 1,
+                skin: 'layui-layer-rim', //加上边框
+                area: ['390px', '130px'], //宽高
+                content: '<div id="pingfen" style="margin: 10px;">\n' +
+                    '\n' +
+                    '                    <span>你的评分：</span>&nbsp;&nbsp;&nbsp;\n' +
+                    '                    <select id="select">\n' +
+                    '                        <option value="1">1</option>\n' +
+                    '                        <option value="2">2</option>\n' +
+                    '                        <option value="3">3</option>\n' +
+                    '                        <option value="4">4</option>\n' +
+                    '                        <option value="5">5</option>\n' +
+                    '                        <option value="6">6</option>\n' +
+                    '                        <option value="7">7</option>\n' +
+                    '                        <option value="8">8</option>\n' +
+                    '                        <option value="9">9</option>\n' +
+                    '                        <option value="10">10</option>\n' +
+                    '                    </select>\n' +
+                    '                    &nbsp;&nbsp;&nbsp;\n' +
+                    '                    <button id="checkScore" type="button" class="btn btn-default" style="float: right;">确定评分</button>\n' +
+                    '                </div>'
+            });
+
+        });
+
+        // 初始化页面
+        getPageOfMemo(1);
+
+        // 进行评分操作 layui写法
+        $(document).on("click",'#checkScore',function(){
+
+            /*获取用户的评分*/
+            var optionvalue = $('#select option:selected').val();
+
+            $.ajax({
+                url: "/score/findscore",
+                type: "post",
+                data: {
+                    "score": optionvalue,
+                    "type": "music",
+                    "typeid": [[${musicEntity.musicid}]]
+                },
+                async:false,
+                success: function (data) {
+
+                    if (data === "用户未登录") {
+                        layer.msg("用户未登录，无权限评分");
+                    } else if (data === "该用户已评价") {
+                        layer.msg("你已经评过分了");
+                    } else if (data === "评分成功") {
+                        layer.msg("评分成功");
+                    }
+
+                }
+            });
+        });
+
+        /*提交评论操作*/
+        $('#submitComment').click(function () {
+
+            var musiccomment = $('#comment').val();
+
+            if (musiccomment === "" ) {
+                layer.msg("评论不能为空");
+            } else {
+
+                var xUrl = "/comment/submitmusicComment";
+
+                $.ajax({
+                    url:xUrl,
+                    type:"POST",
+                    data: {
+                        "musiccomment":musiccomment,
+                        "musicid":[[${musicEntity.musicid}]]
+                    },
+
+                    async:false,
+                    success:function (data) {
+
+                        if (data === "用户未登录") {
+                            layer.msg("账号未登录，无权限评论");
+                        } else {
+                            layer.msg("评论成功，刷新查看");
+                        }
+                    }
+                });
+
+
+            }
+
+        });
+
+    });
+
+
+    // 分页函数
+    function getPageOfMemo(page) {
+        $.ajax({
+            url : "/comment/findMusicComment",
+            type : "get",
+            data : {
+                "musicid" : [[${musicEntity.musicid}]],
+                "pageNum" : page, // 初始页
+                "pageSize" : 5,
+            },
+            async: false,
+            success : function(data) {
+                var totalPages;
+                var pageSize = 5;
+                if (data != null) {
+
+                    totalPages = (data["commentNum"]+pageSize-1) /pageSize;
+
+                    var htm = "";
+
+                    if (data["commentlist"].length == 0) {
+                        htm += `<span>&nbsp;&nbsp;&nbsp;&nbsp;暂无评论...</span>`;
+                    } else {
+                        $.each(data["commentlist"], function(i, item) {
+
+                            /*嵌套ajax 获取后台的用户数据*/
+                            $.ajax({
+                                url: "/comment/finduser",
+                                type: "get",
+                                data: {
+                                    "userid": item.userid
+                                },
+                                async: false,
+                                success: function (data1) {
+
+
+                                    /*评论界面*/
+                                    htm += `
+                                        <div class="col-md-12 blog-main" style="border-top: #d0d6d6 1px dashed;border-bottom: #d0d6d6 1px dashed;">
+                                            <article class="comment">
+                                                <header class="clearfix">
+                                                    <img src="/prc/headprc/${data1.headprc}.jpg" alt="找不到图片" class="avatar">&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <span class="date"><span>用户：</span>${data1.nickname}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <span class="date">${item.commentdate}</span>
+                                                </header>
+                                                <br/>
+                                                <div class="body">
+                                                    评论：
+                                                    <p style="text-indent: 30px;"><span>${item.comment}</span>
+                                                    </p>
+                                                </div>
+                                            </article>
+                                    </div>
+
+                                    `;
+                                }
+                            });
+
+                        });
+                    }
+
+                    $('#showcomment').html(htm);
+
+                    var element = $('#pageButton');
+                    var options = {
+                        bootstrapMajorVersion : 3,
+                        currentPage : page, // 当前页数
+                        //numberOfPages : 5, // 显示按钮的数量
+                        totalPages : totalPages, // 总页数
+                        itemTexts : function(type, page, current) {
+                            switch (type) {
+                                case "first":
+                                    return "首页";
+                                case "prev":
+                                    return "上一页";
+                                case "next":
+                                    return "下一页";
+                                case "last":
+                                    return "末页";
+                                case "page":
+                                    return page;
+                            }
+                        },
+                        // 点击事件，用于通过Ajax来刷新整个list列表
+                        onPageClicked : function(event, originalEvent, type, page) {
+                            getPageOfMemo(page);
+                        }
+                    };
+
+                    element.bootstrapPaginator(options);
+                }
+            }
+        });
+    };
+
+</script>
+
+</body>
+</html>

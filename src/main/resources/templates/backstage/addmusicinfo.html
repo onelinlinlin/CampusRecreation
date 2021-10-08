@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.css"/>
+    <script src="/bootstrap/js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/bootstrap/js/sweetalert.min.js" type="text/javascript" charset="utf-8"></script>
+
+    <!--bootstrap 日期插件-->
+    <script src="/bootstrap/js/bootstrap-datetimepicker.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap-datetimepicker.css"/>
+    <script src="/bootstrap/js/bootstrap-datetimepicker.zh-CN.js" type="text/javascript" charset="utf-8"></script>
+
+    <style>
+        #bread { margin-top: 5px;}
+        #musicadd {text-align: center; color: #122b40;}
+        #form {
+            position: relative;
+            left: 30%;
+            top: 30%;
+        }
+    </style>
+
+    <script>
+
+        $(function () {
+
+            /*bootstrap时间选择插件*/
+            $('#pubdate').datetimepicker({
+                forceParse: 0, //设置为0，时间不会跳转为1899
+                language: 'zh-CN' , //显示中文
+                format: 'yyyy-mm-dd', //显示格式
+                minView: "month", //显示到月份
+                initialDate: new Date(), //初始化当前的日期
+                autoclose: true, //选中自动关闭
+                todayBtn: true //显示当日按钮
+            });
+
+            //信息添加
+            $('#submitBtn').click(function () {
+                var musicname = $('#musicname').val();
+                var singer = $('#singer').val();
+                var publisher = $('#publisher').val();
+                var pubdate = $('#pubdate').val();
+                var musictype = $('#musictype').val();
+                var briefintro = $('#briefintro').val();
+
+                if ( musicname != "" && singer != "" && publisher != "" && pubdate != "" && musictype != ""  && briefintro != "") {
+
+                    $.ajax({
+                        url: "/music/addnewmusic",
+                        type:"post",
+                        data: {
+                            "musicname": musicname,
+                            "singer": singer,
+                            "publisher" : publisher,
+                            "pubdate" :pubdate,
+                            "musictype" : musictype,
+                            "briefintro": briefintro
+                        },
+                        async:false,
+                        success: function (data) {
+                            if (data == "操作成功") {
+                                swal({
+                                    title: "提示",
+                                    text: "添加音乐信息成功",
+                                    icon: "success",
+                                    showConfirmButton: true
+                                });
+
+                                $('#musicname').val("");
+                                $('#singer').val("");
+                                $('#publisher').val("");
+                                $('#pubdate').val("");
+                                $('#musictype').val("");
+                                $('#briefintro').val("");
+
+                            } else {
+                                swal({
+                                    title: "提示",
+                                    text: "添加音乐信息失败",
+                                    icon: "error",
+                                    showConfirmButton: true
+                                });
+                            }
+                        }
+                    });
+
+                } else {
+                    swal({
+                        title: "提示",
+                        text: "有信息未填写",
+                        icon: "error",
+                        showConfirmButton: true
+                    });
+                }
+
+            });
+
+        });
+
+
+    </script>
+
+</head>
+
+<body>
+
+<div id="mainbody">
+
+    <!--面包屑导航开始-->
+    <ul class="breadcrumb" id="bread">当前位置：
+        <li>后台管理</li>
+        <li>音乐管理</li>
+        <li>添加音乐</li>
+    </ul>
+
+    <div class="page-header" id="musicadd">
+        <h3>添加音乐</h3>
+    </div>
+
+
+    <div id="form" class="form-horizontal" role="form">
+
+        <div class="form-group">
+            <label for="musicname" class="col-sm-2 control-label">音乐名称</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" id="musicname" name="musicname" placeholder="请输入音乐名称">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="singer" class="col-sm-2 control-label">歌手</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" id="singer" name="singer" placeholder="请输入歌手">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="publisher" class="col-sm-2 control-label">出版者</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" id="publisher" name="publisher" placeholder="请输入出版者">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="pubdate" class="col-sm-2 control-label">出版日期</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" id="pubdate" name="pubdate" placeholder="请输入出版日期">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="musictype" class="col-sm-2 control-label">音乐流派</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" id="musictype" name="musictype" placeholder="请输入音乐流派">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="briefintro" class="col-sm-2 control-label">音乐简介</label>
+            <div class="col-sm-3">
+                <textarea id="briefintro" class="form-control" name="briefintro" rows="6"></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" id="submitBtn" class="btn btn-default">提交音乐信息</button>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

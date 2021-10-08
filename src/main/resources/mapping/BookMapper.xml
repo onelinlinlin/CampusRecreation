@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lzp.mapper.BookMapper">
+
+    <select id="findallbook" resultType="BookEntity">
+        select * from book
+    </select>
+
+    <select id="findBookById" parameterType="int" resultType="BookEntity">
+        SELECT * FROM book WHERE bookid = #{bookid}
+    </select>
+
+    <select id="findBookBybookname"  resultType="BookEntity">
+        SELECT * FROM book WHERE bookname like "%"#{bookname}"%"
+    </select>
+
+    <select id="findBookrecommend" parameterType="int" resultType="BookEntity">
+        SELECT * FROM book WHERE recommend = '是'
+    </select>
+
+    <select id="setBookrecommend">
+        UPDATE book SET recommend = #{recommend} where bookid = #{bookid}
+    </select>
+
+    <select id="addnewbook">
+        insert into book(bookid,bookname,author,press,pressdate,briefintro,price,bookprc,booktype,score,recommend)
+        values(0,#{bookname},#{author},#{press},#{pressdate},#{briefintro},#{price},"","",0,"否")
+    </select>
+
+    <update id="updatebook">
+        UPDATE book
+        <set>
+            <if test="bookname != null and bookname != '' ">
+                bookname = #{bookname},
+            </if>
+            <if test="author != null and author != '' ">
+                author = #{author},
+            </if>
+            <if test="press != null and press != '' ">
+                press = #{press},
+            </if>
+            <if test="pressdate != null and pressdate != '' ">
+                pressdate = #{pressdate},
+            </if>
+            <if test="briefintro != null and briefintro != '' ">
+                briefintro = #{briefintro},
+            </if>
+            <if test="price != null and price != '' ">
+                price = #{price},
+            </if>
+        </set>
+        where bookid = #{bookid}
+    </update>
+
+    <delete id="delbook">
+        delete from book where bookid = #{bookid}
+    </delete>
+
+    <update id="updateBookprc">
+        UPDATE book SET bookprc = #{bookid} WHERE bookid = #{bookid}
+    </update>
+
+</mapper>

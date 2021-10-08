@@ -1,0 +1,13 @@
+.bookmain {
+    border-top: #d0d6d6 1px dashed;
+    border-bottom: #d0d6d6 1px dashed;
+}
+
+.bookinfo{
+    margin: 15px;
+}
+
+.commentlist{
+    border-top: #d0d6d6 1px dashed;
+    border-bottom: #d0d6d6 1px dashed;
+}

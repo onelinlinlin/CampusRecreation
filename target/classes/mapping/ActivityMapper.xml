@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lzp.mapper.ActivityMapper">
+
+    <select id="findallactivity" resultType="ActivityEntity">
+        select * from activity
+    </select>
+
+    <select id="findactivitybyid" parameterType="int" resultType="ActivityEntity">
+        select * from activity where activityid = #{activityid}
+    </select>
+
+    <select id="findactivitybystate" parameterType="int" resultType="ActivityEntity">
+        select * from activity where state = "审核通过"
+    </select>
+
+    <select id="findactivitybyuserid" parameterType="int" resultType="ActivityEntity">
+        select * from activity where userid = #{userid}
+    </select>
+
+    <select id="addnewactivity">
+        insert into activity(activityid,userid,activityname,activityplace,activityintro,activitydate,activitytime,activityprc,endtime,state) values(0,#{userid},#{activityname},#{activityplace},#{activityintro},#{activitydate},#{activitytime},"","","待审核")
+    </select>
+
+    <select id="findactivitybyactivityintro" resultType="int">
+        select activityid from activity where activityintro = #{activityintro} and activityname = #{activityname}
+    </select>
+
+    <select id="updateactivityprc">
+        UPDATE activity SET activityprc = #{activityid} WHERE activityid = #{activityid}
+    </select>
+
+    <update id="updateactivitystate">
+        UPDATE activity SET state = #{state} WHERE activityid = #{activityid}
+    </update>
+
+    <delete id="delactivitybyid">
+        delete from activity where activityid = #{activityid}
+    </delete>
+
+</mapper>

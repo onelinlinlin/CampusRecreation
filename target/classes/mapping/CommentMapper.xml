@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lzp.mapper.CommentMapper">
+
+    <select id="findallbookcomment" resultType="CommentEntity">
+        select * from comment WHERE types = 'book' and typeid = #{typeid}
+    </select>
+
+    <select id="findallmoviecomment" resultType="CommentEntity">
+        select * from comment WHERE types = 'movie' and typeid = #{typeid}
+    </select>
+
+    <select id="findallmusiccomment" resultType="CommentEntity">
+        select * from comment WHERE types = 'music' and typeid = #{typeid}
+    </select>
+
+    <select id="submitcomment">
+        insert into comment(commentid,types,userid,score,comment,typeid,commentdate) values(0,#{types},#{userid},0,#{comment},#{typeid},#{commentdate})
+    </select>
+
+</mapper>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>校园课外娱乐网站后台</title>
+
+    <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.css"/>
+    <link href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/bootstrap/css/htmleaf-demo.css">
+    <link rel="stylesheet" href="/bootstrap/assets/css/jquery.mCustomScrollbar.min.css" />
+    <link rel="stylesheet" href="/bootstrap/assets/css/custom.css">
+
+    <script type="text/javascript" src="/bootstrap/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.js"></script>
+    <script src="/bootstrap/assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="/bootstrap/assets/js/custom.js"></script>
+
+    <style>
+        #rightshow {
+            width: 100%;
+            height: 100%;
+            background-color: #f0f0f0;
+            /*background-image:url("/image/bg1.jpg");*/
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    </style>
+
+    <script>
+
+        /*右边页面的嵌入*/
+        $(function () {
+
+            /*用户管理*/
+            $('#userManage').click(function () {
+                $('#rightshow').load('/admin/usermanage');
+            });
+
+            /*图书管理*/
+            $('#bookManage').click(function () {
+                $('#rightshow').load('/admin/bookedit');
+            });
+
+            /*添加图书*/
+            $('#addbook').click(function () {
+                $('#rightshow').load('/admin/addbookinfo');
+            });
+
+            /*电影管理*/
+            $('#movieManage').click(function () {
+                $('#rightshow').load('/admin/movieedit');
+            });
+
+            /*添加电影*/
+            $('#addmovie').click(function () {
+                $('#rightshow').load('/admin/addmovieinfo');
+            });
+
+            /*音乐管理*/
+            $('#musicManage').click(function () {
+                $('#rightshow').load('/admin/musicedit');
+            });
+
+            /*添加音乐*/
+            $('#addmusic').click(function () {
+                $('#rightshow').load('/admin/addmusicinfo');
+            });
+
+            /*活动管理*/
+            $('#activityManage').click(function () {
+                $('#rightshow').load('/admin/activitymanage');
+            });
+
+            /*书籍推荐*/
+            $('#bookRecommend').click(function () {
+                $('#rightshow').load('/admin/bookRecommend');
+            });
+
+            /*影片推荐*/
+            $('#movieRecommend').click(function () {
+                $('#rightshow').load('/admin/movieRecommend');
+            });
+
+            /*音乐推荐*/
+            $('#musicRecommend').click(function () {
+                $('#rightshow').load('/admin/musicRecommend');
+            });
+
+        });
+
+    </script>
+</head>
+    <body>
+        <!--左侧菜单栏-->
+        <div id="mainbody">
+            <div class="page-wrapper" style="background-color:#FFFFFF;">
+                <!--导航栏开始-->
+                <nav id="sidebar" class="sidebar-wrapper">
+
+                    <!--菜单主体内容-->
+                    <div class="sidebar-content">
+                        <!--开启按钮-->
+                        <a href="#" id="toggle-sidebar"><i class="fa fa-bars" style="color: #99CC66;"></i></a>
+                        <!--开启按钮结束-->
+
+                        <!--侧边栏顶部-->
+                        <div class="sidebar-brand">
+                            <a href="#">后台管理</a>
+                        </div>
+                        <div class="sidebar-header">
+                            <div class="user-pic">
+                                <img class="img-responsive img-rounded" th:src="|/prc/headprc/${admindata.username}.jpg|"/>
+                            </div>
+                            <div class="user-info">
+                                <span class="user-name" th:text="'昵称：'+ ${admindata.nickname}"></span>
+                                <span class="user-role" th:text="'用户名：'+ ${admindata.username}"></span>
+                                <span class="user-role" th:text="'手机号：'+ ${admindata.phone}"></span>
+                            </div>
+                        </div>
+                        <!--侧边栏顶部结束-->
+
+                        <!--菜单栏-->
+                        <div class="sidebar-menu">
+                            <ul>
+                                <li class="header-menu"><span>管理菜单</span></li>
+
+                                <li class="sidebar-dropdown">
+                                    <a><i class="fa fa-book"></i><span>&nbsp;图书管理</span></a>
+                                    <div class="sidebar-submenu">
+                                        <ul>
+                                            <li><a href="#" id="bookManage">图书操作</a></li>
+                                            <li><a href="#" id="addbook">添加图书</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+
+                                <li class="sidebar-dropdown">
+                                    <a><i class="fa fa-file-movie-o"></i><span>&nbsp;电影管理</span></a>
+                                    <div class="sidebar-submenu">
+                                        <ul>
+                                            <li><a href="#" id="movieManage">电影操作</a></li>
+                                            <li><a href="#" id="addmovie">添加电影</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+
+                                <li class="sidebar-dropdown">
+                                    <a><i class="fa fa-music"></i><span>&nbsp;音乐管理</span></a>
+                                    <div class="sidebar-submenu">
+                                        <ul>
+                                            <li><a href="#" id="musicManage">音乐操作</a></li>
+                                            <li><a href="#" id="addmusic">添加音乐</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+
+                                <li class="sidebar-dropdown">
+                                    <a href="#"><i class="fa fa-magic"></i><span>&nbsp;首页推荐</span></a>
+                                    <div class="sidebar-submenu">
+                                        <ul>
+                                            <li><a href="#" id="bookRecommend">书籍推荐</a></li>
+                                            <li><a href="#" id="movieRecommend">影片推荐</a></li>
+                                            <li><a href="#" id="musicRecommend">音乐推荐</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <a href="#" id="activityManage">
+                                        <i class="fa fa-life-bouy"></i>
+                                        <span>活动管理</span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#" id="userManage">
+                                        <i class="fa fa-user"></i>
+                                        <span>用户管理</span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </div>
+                        <!--菜单栏结束-->
+                    </div>
+                    <!--菜单主体内容结束-->
+
+                    <!--菜单栏底部-->
+                    <div class="sidebar-footer">
+                        <a href="/user/index">去往前台</a>
+                        <a href="/admin/logout">退出登陆</a>
+                    </div>
+                    <!--菜单栏底部结束-->
+
+                </nav>
+                <!--导航栏结束-->
+
+                <main class="page-content" style="width: 100%;height: 100%;">
+                    <div id="rightshow" class="container-fluid">
+                        <header class="htmleaf-header">
+                            <h1 style="color: #122b40;">校园课外娱乐网管理后台</h1>
+                        </header>
+                        <h3 style="text-align:center;color: #122b40;">欢迎你，用户 <span style="color: red;" th:text="${admindata.nickname}"></span></h3>
+                    </div>
+
+                </main>
+
+            </div>
+        </div>
+        <!--左侧菜单栏结束-->
+
+    </body>
+</html>
+

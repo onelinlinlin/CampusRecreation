@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lzp.mapper.ScoreMapper">
+
+    <select id="findscore" resultType="ScoreEntity">
+        select * from score WHERE userid = #{userid} and type = #{type} and typeid = #{typeid}
+    </select>
+
+    <select id="findscorelist" resultType="int">
+        select scores from score WHERE type = #{type} and typeid = #{typeid}
+    </select>
+
+    <select id="addnewuserscore">
+        insert into score (scoreid,scores,userid,type,typeid) values(0,#{scores},#{userid},#{type},#{typeid})
+    </select>
+
+    <select id="updatebookescore">
+        UPDATE book SET score = #{scores} WHERE bookid = #{typeid}
+    </select>
+
+    <select id="updatemovieescore">
+        UPDATE movie SET score = #{scores} WHERE movieid = #{typeid}
+    </select>
+
+    <select id="updatemusicescore">
+        UPDATE music SET score = #{scores} WHERE musicid = #{typeid}
+    </select>
+
+</mapper>

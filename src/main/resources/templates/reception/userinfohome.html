@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>个人信息管理</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <!-- Bootstrap styles -->
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/bootstrap/css/fileinput.min.css"/>
+
+    <!-- Font-Awesome -->
+    <link rel="stylesheet" href="/bootstrap/font-awesome/css/font-awesome.min.css">
+
+    <!-- Google Webfonts -->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600|PT+Serif:400,400italic' rel='stylesheet' type='text/css'>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/bootstrap/css/style.css" id="theme-styles">
+
+
+    <script src="/bootstrap/js/jquery.min.js"></script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/bootstrap/js/modernizr.js"></script>
+    <script src="/js/myjs/ifshowuser.js"></script>
+    <script src="/bootstrap/js/fileinput.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/bootstrap/js/zh.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/js/layer/layer.js" type="text/javascript" charset="utf-8"></script>
+
+    <script>
+
+        $(function () {
+
+            /*页面加载时，获得用户信息，进行页面显示*/
+            $.ajax({
+                url: "/user/useriflogin",
+                type: "POST",
+                async:false,
+                success: function (data) {
+
+                    var username = "";
+
+                    if (data['iflogin'] === "usernologin") {
+                        username = "用户未登录";
+                    } else if (data['iflogin'] === "userislogin") {
+                        username = data['userdata'].username;
+                    }
+
+                    $('#username').val(username);
+                }
+            });
+
+
+            //添加个人信息
+            $('#submitBtn').click(function () {
+                var userNickname = $('#userNickname').val();
+                var userphone = $('#userphone').val();
+                var userSex = $('#userSex option:selected').val();
+
+                if (userNickname != "" &&　userphone != "" && userSex != "") {
+                    $.ajax({
+                        url: "/user/updateUserinfo",
+                        type:"post",
+                        async:false,
+                        data: {
+                            "userNickname": userNickname,
+                            "userphone":userphone,
+                            "userSex":userSex
+                        },
+                        success: function (data) {
+                            if (data === "修改个人信息成功") {
+                                layer.msg("修改个人信息成功");
+                            } else if(data === "用户未登录") {
+                                layer.msg("用户未登录，无权限修改");
+                            }
+                        }
+                    });
+                } else {
+                    layer.msg("有信息未填入");
+                }
+
+            });
+
+            //实现文件上传
+            $("#uploadfile").fileinput({
+                language: 'zh', //设置语言
+                uploadUrl: "/user/uploadfile", //上传的地址
+                allowedFileExtensions: ['jpg', 'gif', 'png','bmp','jpeg'],//接收的文件后缀
+                uploadAsync: false, //默认异步上传
+                showUpload: true, //是否显示上传按钮
+                showRemove : false, //显示移除按钮
+                browseClass: "btn btn-primary", //按钮样式
+                maxFileCount: 1, //表示允许同时上传的最大文件个数
+                previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+                slugCallback: function (filename) {
+                    return filename.replace('(', '_').replace(']', '_');
+                }
+            });
+
+        });
+
+    </script>
+
+</head>
+<body>
+<header>
+    <div class="widewrapper masthead">
+        <div class="container">
+            <a href="" id="logo">
+                <span style="color: #3c485d; font-size: 30px;">校园课外娱乐网</span>
+            </a>
+
+            <nav class="pull-right">
+                <div class="collapse navbar-collapse">
+                    <ul class="nav nav-pills navbar-nav">
+                        <li>
+                            <a href="/user/index">首页</a>
+                        </li>
+                        <li>
+                            <a href="/user/bookhome">读书</a>
+                        </li>
+                        <li>
+                            <a href="/user/moviehome">电影</a>
+                        </li>
+                        <li>
+                            <a href="/user/musichome">音乐</a>
+                        </li>
+                        <li>
+                            <a href="/user/activityhome">户外活动</a>
+                        </li>
+                        <li>
+                            <a href="/user/userinfohome">个人管理</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+        </div>
+    </div>
+
+    <div class="widewrapper subheader">
+        <div class="container">
+
+            <!--面包屑导航-->
+            <div class="clean-breadcrumb">
+                <a href="/user/index">首页</a>
+                <span class="separator">&#x2F;</span>
+                <a href="/user/userinfohome">个人信息管理</a>
+            </div>
+
+            <div class="clean-searchbox">
+                <div accept-charset="utf-8">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button class="searchbutton" id="searchbtn">
+                        <i class="fa fa-search"></i>&nbsp;&nbsp;&nbsp;&nbsp;图书 音乐 电影
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="widewrapper main">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-8 blog-main">
+
+                <div class="page-header">
+                    <h4><span>个人信息管理</span></h4>
+                </div>
+
+                <!--表单开始-->
+                <div id="form">
+
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label for="username" class="col-sm-2 control-label">账号</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" readonly="readonly" id="username" name="username"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="userNickname" class="col-sm-2 control-label">昵称</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" id="userNickname" name="userNickname" placeholder="请输入昵称"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="userphone" class="col-sm-2 control-label">手机号</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" id="userphone" name="userphone" placeholder="请输入手机号"/>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="userSex" class="col-sm-2 control-label">性别</label>
+                            <div class="col-sm-6">
+                                <!--<input type="text" class="form-control" id="userSex" name="userSex" placeholder="请输入性别"/>-->
+                                <select id="userSex">
+                                    <option>男</option>
+                                    <option>女</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" id="submitBtn" class="btn btn-default">确定提交</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="uploadfile" class="col-sm-2 control-label">头像上传</label>
+                            <div class="col-sm-6">
+                                <input type="file" name="file" id="uploadfile"/>
+                                <p class="help-block">支持jpg格式</p>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+                <!--表单结束-->
+
+
+                <div class="paging">
+                    <a href="#" class="older">返回顶部</i></a>
+                </div>
+            </div>
+
+
+            <!--右边-->
+            <aside class="col-md-4 blog-aside">
+
+                <div class="aside-widget">
+                    <header>
+                        <h3>用户</h3>
+                    </header>
+                    <div class="body" id="showuserinfo">
+
+                    </div>
+                </div>
+
+                <div class="aside-widget">
+                    <header>
+                        <h3>我的</h3>
+                    </header>
+                    <div class="body">
+                        <ul>
+                            <li><button type="button" class="btn btn-default" id="myactivity">我发起的活动</button></li>
+                            <li><button type="button" class="btn btn-default" id="joinactivity">我参与的活动</button></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </aside>
+        </div>
+    </div>
+</div>
+
+<!--网页底部-->
+<footer>
+    <div class="widewrapper footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 footer-widget">
+                    <h3> <i class="fa fa-user"></i>关于</h3>
+
+                    <p>这是一个集书籍、电影、音乐和户外活动的四个主题的校园课外娱乐网站，用于丰富学生的课外生活。</p>
+                </div>
+
+                <div class="col-md-4 footer-widget">
+                    <h3> <i class="fa fa-pencil"></i>校园网站</h3>
+                    <ul class="clean-list">
+                        <li><a href="https://www.zhku.edu.cn/" target="_blank">仲恺农业工程学院官网</a></li>
+                        <li><a href="http://jw.zhku.edu.cn/" target="_blank">仲恺农业工程学院教务网</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-4 footer-widget">
+                    <h3> <i class="fa fa-envelope"></i>联系方式</h3>
+                    <p>邮箱：2606201863@qq.com</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.css"/>
+    <script src="/bootstrap/js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="/bootstrap/js/sweetalert.min.js" type="text/javascript" charset="utf-8"></script>
+
+    <!--bootstrap 日期插件-->
+    <script src="/bootstrap/js/bootstrap-datetimepicker.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap-datetimepicker.css"/>
+    <script src="/bootstrap/js/bootstrap-datetimepicker.zh-CN.js" type="text/javascript" charset="utf-8"></script>
+
+    <style>
+        #bread { margin-top: 5px;}
+        #bookadd {text-align: center; color: #122b40;}
+        #form {
+            position: relative;
+            left: 30%;
+            top: 30%;
+        }
+    </style>
+
+    <script>
+
+        $(function () {
+
+            /*bootstrap时间选择插件*/
+            $('#pressdate').datetimepicker({
+                forceParse: 0, //设置为0，时间不会跳转为1899
+                language: 'zh-CN' , //显示中文
+                format: 'yyyy-mm-dd', //显示格式
+                minView: "month", //显示到月份
+                initialDate: new Date(), //初始化当前的日期
+                autoclose: true, //选中自动关闭
+                todayBtn: true //显示当日按钮
+            });
+
+
+            //图书信息添加
+            $('#submitBtn').click(function () {
+                var bookname = $('#bookname').val();
+                var author = $('#author').val();
+                var press = $('#press').val();
+                var pressdate = $('#pressdate').val();
+                var price = $('#price').val();
+                var briefintro = $('#briefintro').val();
+
+                if ( bookname != "" && author != "" && press != "" && pressdate != "" && price != "" && briefintro != "") {
+
+                    $.ajax({
+                        url: "/book/addnewbook",
+                        type:"post",
+                        data: {
+                            "bookname": bookname,
+                            "author": author,
+                            "press" : press,
+                            "pressdate" :pressdate,
+                            "price" : price,
+                            "briefintro" :briefintro
+                        },
+                        async:false,
+                        success: function (data) {
+                            if (data == "操作成功") {
+                                swal({
+                                    title: "提示",
+                                    text: "添加图书信息成功",
+                                    icon: "success",
+                                    showConfirmButton: true
+                                });
+
+                                $('#bookname').val("");
+                                $('#author').val("");
+                                $('#press').val("");
+                                $('#pressdate').val("");
+                                $('#price').val("");
+                                $('#briefintro').val("");
+
+                            } else {
+                                swal({
+                                    title: "提示",
+                                    text: "添加图书信息失败",
+                                    icon: "error",
+                                    showConfirmButton: true
+                                });
+                            }
+                        }
+                    });
+
+
+                } else {
+                    swal({
+                        title: "提示",
+                        text: "有信息未填写",
+                        icon: "error",
+                        showConfirmButton: true
+                    });
+                }
+
+            });
+
+        });
+
+
+    </script>
+
+</head>
+
+<body>
+
+<div id="mainbody">
+
+    <!--面包屑导航开始-->
+    <ul class="breadcrumb" id="bread">当前位置：
+        <li>后台管理</li>
+        <li>图书管理</li>
+        <li>添加图书</li>
+    </ul>
+
+    <div class="page-header" id="bookadd">
+        <h3>添加图书</h3>
+    </div>
+
+
+    <div id="form" class="form-horizontal" role="form">
+
+        <div class="form-group">
+            <label for="bookname" class="col-sm-2 control-label">图书名称</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" id="bookname" name="bookname" placeholder="请输入图书名称">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="author" class="col-sm-2 control-label">图书作者</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" id="author" name="author" placeholder="请输入图书作者">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="press" class="col-sm-2 control-label">出版社</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" id="press" name="press" placeholder="请输入出版社">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="pressdate" class="col-sm-2 control-label">出版日期</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" id="pressdate" name="pressdate" placeholder="请输入出版日期">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="price" class="col-sm-2 control-label">价格</label>
+            <div class="col-sm-3">
+                <input type="text" class="form-control" id="price" name="price" placeholder="请输入价格(元)">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="briefintro" class="col-sm-2 control-label">图书简介</label>
+            <div class="col-sm-3">
+                <textarea id="briefintro" class="form-control" name="briefintro" rows="6"></textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" id="submitBtn" class="btn btn-default">提交图书信息</button>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
